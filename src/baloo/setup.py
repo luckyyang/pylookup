@@ -12,8 +12,6 @@ class Setup(object):
     powers_of_x2: list[G2Point]
     z_H_comm_1: G2Point
     t_comm_1: G2Point
-    # coeffs of quotient commitment polynomial of T(X) in coefficient form
-    Q_T_comm_poly_coeffs: list[G1Point]
 
     @classmethod
     # tau: a random number whatever you choose
@@ -80,11 +78,9 @@ class Setup(object):
         self.generate_srs(powers, tau)
         table_len = len(public_table)
         # 2. Compute and output [z_H(x)] * G1
-        # vanishing polynomial: X^N - 1, N = group_order_N - 1
+        # vanishing polynomial: X^N - 1, N = group_order_N - 1 in coefficient form
         poly_util = PolyUtil()
-        z_H_array = poly_util.vanishing_poly(table_len)
-        # in coefficient form
-        z_H_poly = Polynomial(z_H_array, Basis.MONOMIAL)
+        z_H_poly = poly_util.vanishing_poly(table_len)
 
         z_H_comm_1 = self.commit_g1(z_H_poly)
         print("Commitment of z_H(X) on G1: ", z_H_comm_1)

@@ -54,10 +54,8 @@ class Prover:
         self.t_values = [Scalar(val) for val in table]
         self.t_poly = Polynomial(self.t_values, Basis.LAGRANGE).ifft()
         self.roots_of_unity_N = Scalar.roots_of_unity(len(table))
-        # vanishing polynomial: X^N - 1, N = len(table)
-        z_H_array = poly_util.vanishing_poly(len(table))
-        # in coefficient form
-        self.z_H_poly = Polynomial(z_H_array, Basis.MONOMIAL)
+        # vanishing polynomial: X^N - 1, N = len(table) in coefficient form
+        self.z_H_poly = poly_util.vanishing_poly(len(table))
 
     def prove(self, lookup) -> Proof:
         self.m = len(lookup)
@@ -143,9 +141,7 @@ class Prover:
             v_values.append(v)
 
         # vanishing polynomial in coefficient form
-        z_I_poly = H_I_interp_poly.vanishing_poly()
-
-        self.z_I_poly = z_I_poly
+        self.z_I_poly = H_I_interp_poly.vanishing_poly()
 
         print("col_values: ", col_values)
         self.col = col_values
@@ -218,7 +214,7 @@ class Prover:
 
         V = Scalar.roots_of_unity(m)
         # X^m - 1
-        z_V_values = poly_util.vanishing_poly(m)
+        z_V_values = poly_util.vanishing_poly(m).values
         z_V_poly = Polynomial(z_V_values, Basis.MONOMIAL)
         # z_I(0)
         z_I_at_0 = z_I_poly.coeff_eval(scalar_0)

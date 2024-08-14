@@ -294,7 +294,8 @@ class PolyUtil:
     # vanishing polynomial on multiplicative subgroup
     # z_H(X) = X^n - 1
     def vanishing_poly(self, n: int) -> Polynomial:
-        return [Scalar(-1)] + [Scalar(0)] * (n - 1) + [Scalar(1)]
+        values =[Scalar(-1)] + [Scalar(0)] * (n - 1) + [Scalar(1)]
+        return Polynomial(values, Basis.MONOMIAL)
 
     # generate polynomial: X^n
     def x_exponent_poly(self, n: int) -> Polynomial:

@@ -1,6 +1,6 @@
 import random
-from src.baloo.setup import Setup
-from src.baloo.prover import Prover
+from setup import Setup
+from prover import Prover
 
 # setup: public setup includes srs
 # public_table: public table

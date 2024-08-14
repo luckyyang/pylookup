@@ -55,8 +55,7 @@ class VerificationKey:
             (Q_D_comm_1, -v4),
         ])
         # X^m - 1
-        z_V_values = poly_util.vanishing_poly(m)
-        z_V_poly = Polynomial(z_V_values, Basis.MONOMIAL)
+        z_V_poly = poly_util.vanishing_poly(m)
         z_V_poly_at_zeta = z_V_poly.coeff_eval(Scalar(zeta))
 
         # calculate commitment [P_E(X)]1
