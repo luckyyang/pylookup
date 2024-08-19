@@ -78,6 +78,8 @@ class Prover:
         return Proof(msg_1, msg_2, msg_3)
 
     """
+    How to calculate ξ(x)(or v(x) in code)
+
     H = [1, ω, ω^2, ω^3, ω^4, ω^5, ω^6, ω^7]
     table = [1, 2, 3, 4, 5, 6, 7, 8]
     lookup = [3, 7, 3, 4]
@@ -90,18 +92,19 @@ class Prover:
                                 = (X - ω^2)(X - ω^3)(X - ω^6)
     M * t = lookup
     M = [
-        [1, 0, 0],
-        [0, 0, 1],
-        [1, 0, 0],
-        [0, 1, 0],
+        [0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 1, 0],
+        [0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0, 0],
     ]
     m = len(lookup) # 4
     col[0] = M[0].index(1)
     col[1] = M[1].index(1)
     col[2] = M[2].index(1)
     col[3] = M[3].index(1)
-    col: [0, 2, 0, 1]
-    ξ(xi): xi = H_I[col_i] = [ω^2, ω^6, ω^2, ω^3]
+    col: [2, 6, 2, 3]
+    xi = H_I[col_i] = [ω^2, ω^6, ω^2, ω^3]
+    Interpolation with xi and get polynomial: ξ(x)
     """
     def round_1(self, lookup) -> Message1:
         setup = self.setup
@@ -146,7 +149,7 @@ class Prover:
         print("col_values: ", col_values)
         self.col = col_values
         assert np.array_equal([t_values[elem] for elem in col_values], lookup)
-
+        # ξ(x) polynomial
         v_poly = Polynomial(v_values, Basis.LAGRANGE)
         # refer to section 5. can not use FFT due to it's not in multiplicative subgroup
         t_interp_poly = InterpolationPoly(H_I, t_values)

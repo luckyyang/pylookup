@@ -303,7 +303,7 @@ class PolyUtil:
         return Polynomial(values, Basis.MONOMIAL)
 
 # construct MONOMIAL Polynomial with any X and Y values
-# Note: do not use with FFT due to X is probably not multiplicative subgroup
+# Note: for the case X is not multiplicative subgroup that can't use FFT
 class InterpolationPoly:
     n: int
     X: list[Scalar]
